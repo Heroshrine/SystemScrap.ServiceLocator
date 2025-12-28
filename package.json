@@ -1,11 +1,11 @@
 {
-	"name": "com.systemscrap.servicelocator",
-	"version": "1.0.0",
-	"displayName": "SystemScrap.ServiceLocator",
-	"description": "A service locator",
-	"unity": "6000.3",
-	"author": {
-		"name": "Skyler McCloud",
-		"url": "http://www.systemscrap.com"
-	}
+  "name": "com.systemscrap.systemscrap.servicelocator",
+  "version": "1.0.1",
+  "displayName": "SystemScrap Service Locator",
+  "description": "A service locator",
+  "unity": "6000.3",
+  "author": {
+    "name": "Skyler McCloud",
+    "url": "http://www.systemscrap.com"
+  }
 }
