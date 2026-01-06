@@ -17,7 +17,7 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
     /// </remarks>
     public sealed class SceneScopedResolver : IScopedResolver
     {
-        private readonly Scene _scene;
+        private Scene _scene;
         private readonly ServiceLocator _locator;
         private readonly Dictionary<Type, LazyProvider> _providers;
         private readonly NewScope<Scene> _newScope;
@@ -33,9 +33,6 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
         {
             if (!scene.IsValid())
                 throw new ArgumentException("Scene is not valid.", nameof(scene));
-
-            if (!scene.isLoaded)
-                throw new ArgumentException("Scene is not loaded.", nameof(scene));
 
             _scene = scene;
             _services = services;
@@ -59,7 +56,7 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
                     return _locator.ForGlobal().Get<T>();
 
                 _services ??= _newScope(_scene)
-                            ?? throw new InvalidOperationException("Failed to create service dictionary.");
+                              ?? throw new InvalidOperationException("Failed to create service dictionary.");
 
                 if (_services.TryGetValue(provider.OriginalType, out var v) && v is T t)
                     return t;
@@ -101,7 +98,7 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
                     return _locator.ForGlobal().TryGet(out found);
 
                 _services ??= _newScope(_scene)
-                            ?? throw new InvalidOperationException("Failed to create service dictionary.");
+                              ?? throw new InvalidOperationException("Failed to create service dictionary.");
 
                 if (_services.TryGetValue(provider.OriginalType, out var v) && v is T t)
                 {
@@ -128,6 +125,6 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
         }
 
         /// <inheritdoc />
-        public bool IsInScope() => _scene.isLoaded;
+        public bool IsInScope() => _scene.IsValid();
     }
 }
