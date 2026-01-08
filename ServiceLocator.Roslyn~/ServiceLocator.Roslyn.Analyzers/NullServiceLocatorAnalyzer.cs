@@ -8,14 +8,14 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Operations;
 
-namespace ServiceLocator.Roslyn
+namespace SystemScrap.ServiceLocator.Roslyn
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public sealed class NullServiceLocatorAnalyzer : DiagnosticAnalyzer
     {
         public const string DIAGNOSTIC_ID = "SL001";
 
-        private const string k_TYPE = "ServiceLocator.Core.Services";
+        private const string k_TYPE = "SystemScrap.ServiceLocator.Core.Services";
         private const string k_ATTRIBUTE_FULL = "UnityEngine.RuntimeInitializeOnLoadMethodAttribute";
         private const string k_SET_METHOD = "SetLocator";
         private const int k_ATTRIBUTE_PARAM = 4;

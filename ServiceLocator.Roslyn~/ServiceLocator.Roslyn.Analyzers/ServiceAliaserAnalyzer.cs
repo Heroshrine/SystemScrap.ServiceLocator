@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Operations;
 
-namespace ServiceLocator.Roslyn
+namespace SystemScrap.ServiceLocator.Roslyn
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class ServiceAliaserAnalyzer : DiagnosticAnalyzer
@@ -25,7 +25,7 @@ namespace ServiceLocator.Roslyn
         private const string k_DESCRIPTION = "Service aliases must be assignable to the service type they alias.";
         private const string k_DESCRIPTION_SAME = "Service aliases must be different types.";
 
-        private const string k_TYPE_FULL = "ServiceLocator.Framework.IServiceAliaser`1";
+        private const string k_TYPE_FULL = "SystemScrap.ServiceLocator.Framework.IServiceAliaser`1";
         private const string k_METHOD = "As";
 
         private static readonly DiagnosticDescriptor s_Rule = new(DIAGNOSTIC_ID, k_TITLE, k_MESSAGE, k_CATEGORY,
