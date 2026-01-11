@@ -32,9 +32,9 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
             Dictionary<Type, LazyProvider> providers,
             NewScope<GameObject> newScope)
         {
-            _gameObject =
-                gameObject
-                ?? throw new ArgumentNullException(nameof(gameObject));
+            if (!gameObject)
+                throw new ArgumentNullException(nameof(gameObject));
+            _gameObject = gameObject;
 
             _services = services;
             _services = services;
@@ -58,6 +58,16 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
             // check if services contains the key
             if (_services is null || !_services.ContainsKey(requestedType))
             {
+                // gameobjects only, walk up the hierarchy
+                var grabbing = _gameObject.transform.parent;
+                while (grabbing)
+                {
+                    var parentServices = _locator.Grab(grabbing.gameObject);
+                    if (_services is not null && parentServices.TryGetValue(requestedType, out var grabbed))
+                        return grabbed as T;
+                    grabbing = grabbing.parent;
+                }
+
                 // check if we have the type in the providers
                 if (!_providers.TryGetValue(requestedType, out var provider))
                     return _locator.ForScene(_gameObject.scene).Get<T>();
@@ -65,7 +75,7 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
                 // we do this here to avoid polluting disposer helpers with garbage values
                 // (and in this case, avoid creating components)
                 _services ??= _newScope(_gameObject)
-                            ?? throw new InvalidOperationException("Failed to create service dictionary.");
+                              ?? throw new InvalidOperationException("Failed to create service dictionary.");
 
                 // check if the provider's original type was in the service (this allows for provider aliasing)
                 if (_services.TryGetValue(provider.OriginalType, out var v) && v is T t)
@@ -107,11 +117,24 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
             var requestedType = typeof(T);
             if (_services is null || !_services.TryGetValue(requestedType, out var f))
             {
+                var grabbing = _gameObject.transform.parent;
+                while (grabbing)
+                {
+                    var parentServices = _locator.Grab(grabbing.gameObject);
+                    if (_services is not null && parentServices.TryGetValue(requestedType, out var grabbed))
+                    {
+                        found = grabbed as T;
+                        return true;
+                    }
+
+                    grabbing = grabbing.parent;
+                }
+
                 if (!_providers.TryGetValue(requestedType, out var provider))
                     return _locator.ForScene(_gameObject.scene).TryGet(out found);
 
                 _services ??= _newScope(_gameObject)
-                            ?? throw new InvalidOperationException("Failed to create service dictionary.");
+                              ?? throw new InvalidOperationException("Failed to create service dictionary.");
 
                 if (_services.TryGetValue(provider.OriginalType, out var v) && v is T t)
                 {
