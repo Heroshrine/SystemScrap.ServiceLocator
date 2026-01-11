@@ -63,7 +63,7 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
                 while (grabbing)
                 {
                     var parentServices = _locator.Grab(grabbing.gameObject);
-                    if (_services is not null && parentServices.TryGetValue(requestedType, out var grabbed))
+                    if (parentServices is not null && parentServices.TryGetValue(requestedType, out var grabbed))
                         return grabbed as T;
                     grabbing = grabbing.parent;
                 }
@@ -121,7 +121,7 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
                 while (grabbing)
                 {
                     var parentServices = _locator.Grab(grabbing.gameObject);
-                    if (_services is not null && parentServices.TryGetValue(requestedType, out var grabbed))
+                    if (parentServices is not null && parentServices.TryGetValue(requestedType, out var grabbed))
                     {
                         found = grabbed as T;
                         return true;
