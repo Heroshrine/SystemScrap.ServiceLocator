@@ -1,0 +1,149 @@
+.service-window {
+    flex-grow: 1;
+    padding: 6px;
+    background-color: #2a2a2a;
+}
+
+.header {
+    flex-direction: row;
+    align-items: center;
+    border-bottom-width: 1px;
+    border-bottom-color: #3a3a3a;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+}
+
+.window-title {
+    -unity-font-style: bold;
+    font-size: 13px;
+}
+
+.tab-bar {
+    flex-direction: row;
+    margin-bottom: 6px;
+}
+
+.tab-toggle {
+    margin-right: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(0, 0, 0, 0);
+    color: #cfcfcf;
+}
+
+.tab-toggle--active {
+    border-bottom-color: #4aa3ff;
+    color: #ffffff;
+}
+
+.tab-container {
+    flex-grow: 1;
+}
+
+.tab-content {
+    flex-grow: 1;
+}
+
+.columns {
+    flex-direction: row;
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.column {
+    flex-grow: 1;
+    flex-basis: 0;
+    padding: 6px;
+    margin-right: 6px;
+    background-color: #1f1f1f;
+    border-radius: 4px;
+    border-width: 1px;
+    border-color: #3a3a3a;
+    min-width: 140px;
+    min-height: 0;
+}
+
+.column--objects {
+    max-width: 260px;
+    flex-shrink: 0;
+}
+
+.column--details {
+    margin-right: 0;
+    flex-grow: 2;
+}
+
+.column-title {
+    -unity-font-style: bold;
+    margin-bottom: 4px;
+}
+
+.list-view {
+    flex-grow: 1;
+    min-height: 0;
+    min-width: 0;
+    border-top-width: 1px;
+    border-top-color: #2f2f2f;
+    margin-top: 4px;
+}
+
+.details-view {
+    flex-grow: 1;
+    min-height: 0;
+    padding-right: 4px;
+}
+
+.details-title {
+    -unity-font-style: bold;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.detail-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.detail-label {
+    min-width: 120px;
+    color: #b0b0b0;
+}
+
+.detail-value {
+    flex-grow: 1;
+    color: #e0e0e0;
+}
+
+.detail-section-title {
+    margin-top: 8px;
+    -unity-font-style: bold;
+}
+
+.detail-type-list {
+    margin-top: 4px;
+    padding-left: 8px;
+}
+
+.detail-type-item {
+    margin-bottom: 2px;
+}
+
+.detail-object-row {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 6px;
+}
+
+.detail-object-field {
+    flex-grow: 1;
+}
+
+.empty-state {
+    color: #9a9a9a;
+    -unity-font-style: italic;
+    margin-top: 8px;
+}

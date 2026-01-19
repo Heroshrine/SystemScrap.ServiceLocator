@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:uie="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd">
+    <Style src="RegisteredServicesWindow.uss" />
+    <ui:VisualElement class="service-window">
+        <uie:Toolbar class="header">
+            <ui:Label text="Service Locator" class="window-title" />
+            <uie:ToolbarSpacer />
+            <uie:ToolbarButton name="refresh-button" text="Refresh" />
+        </uie:Toolbar>
+
+        <ui:VisualElement class="tab-bar" name="tab-bar">
+            <uie:ToolbarToggle name="tab-global" text="Global" class="tab-toggle" />
+            <uie:ToolbarToggle name="tab-scene" text="Scene" class="tab-toggle" />
+            <uie:ToolbarToggle name="tab-gameobject" text="GameObject" class="tab-toggle" />
+            <uie:ToolbarToggle name="tab-managed" text="Managed" class="tab-toggle" />
+            <uie:ToolbarToggle name="tab-factories" text="Factories" class="tab-toggle" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="tab-container">
+            <ui:VisualElement name="tab-global-content" class="tab-content">
+                <ui:VisualElement class="columns">
+                    <ui:VisualElement class="column column--services">
+                        <ui:Label text="Services" class="column-title" />
+                        <ui:ListView name="global-service-list" class="list-view" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="column column--details">
+                        <ui:Label text="Details" class="column-title" />
+                        <ui:ScrollView name="global-details" class="details-view" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="tab-scene-content" class="tab-content">
+                <ui:VisualElement class="columns">
+                    <ui:VisualElement class="column column--objects">
+                        <ui:Label text="Scenes" class="column-title" />
+                        <ui:ListView name="scene-object-list" class="list-view" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="column column--services">
+                        <ui:Label text="Services" class="column-title" />
+                        <ui:ListView name="scene-service-list" class="list-view" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="column column--details">
+                        <ui:Label text="Details" class="column-title" />
+                        <ui:ScrollView name="scene-details" class="details-view" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="tab-gameobject-content" class="tab-content">
+                <ui:VisualElement class="columns">
+                    <ui:VisualElement class="column column--objects">
+                        <ui:Label text="GameObjects" class="column-title" />
+                        <ui:ListView name="gameobject-object-list" class="list-view" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="column column--services">
+                        <ui:Label text="Services" class="column-title" />
+                        <ui:ListView name="gameobject-service-list" class="list-view" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="column column--details">
+                        <ui:Label text="Details" class="column-title" />
+                        <ui:ScrollView name="gameobject-details" class="details-view" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="tab-managed-content" class="tab-content">
+                <ui:VisualElement class="columns">
+                    <ui:VisualElement class="column column--services">
+                        <ui:Label text="Services" class="column-title" />
+                        <ui:ListView name="managed-service-list" class="list-view" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="column column--details">
+                        <ui:Label text="Details" class="column-title" />
+                        <ui:ScrollView name="managed-details" class="details-view" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="tab-factories-content" class="tab-content">
+                <ui:VisualElement class="columns">
+                    <ui:VisualElement class="column column--objects">
+                        <ui:Label text="Scopes" class="column-title" />
+                        <ui:ListView name="factory-scope-list" class="list-view" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="column column--services">
+                        <ui:Label text="Factories" class="column-title" />
+                        <ui:ListView name="factory-service-list" class="list-view" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="column column--details">
+                        <ui:Label text="Details" class="column-title" />
+                        <ui:ScrollView name="factory-details" class="details-view" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
