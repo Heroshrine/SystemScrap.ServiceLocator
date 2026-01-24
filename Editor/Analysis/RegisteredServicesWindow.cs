@@ -55,7 +55,7 @@ namespace SystemScrap.ServiceLocator.Analysis
         /// <summary>
         /// Opens the Registered Services window.
         /// </summary>
-        [MenuItem("Window/Registered Services", priority = 1000)]
+        [MenuItem("Window/Registered Services", priority = 100000)]
         public static void ShowWindow()
         {
             var wnd = GetWindow<RegisteredServicesWindow>();
