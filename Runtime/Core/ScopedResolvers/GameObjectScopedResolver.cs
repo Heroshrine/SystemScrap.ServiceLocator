@@ -64,7 +64,16 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
                 {
                     var parentServices = _locator.Grab(grabbing.gameObject);
                     if (parentServices is not null && parentServices.TryGetValue(requestedType, out var grabbed))
-                        return grabbed as T;
+                    {
+                        if (grabbed is AliasTo a)
+                            grabbed = a.AliasTarget;
+
+                        if (grabbed is IOnResolved r)
+                            r.OnResolved();
+
+                        return (T)grabbed;
+                    }
+
                     grabbing = grabbing.parent;
                 }
 
@@ -123,7 +132,13 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
                     var parentServices = _locator.Grab(grabbing.gameObject);
                     if (parentServices is not null && parentServices.TryGetValue(requestedType, out var grabbed))
                     {
+                        if (grabbed is AliasTo a)
+                            grabbed = a.AliasTarget;
                         found = grabbed as T;
+
+                        if (grabbed is IOnResolved r)
+                            r.OnResolved();
+
                         return true;
                     }
 
