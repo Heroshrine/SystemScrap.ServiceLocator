@@ -12,7 +12,7 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
     /// Resolves services from a specific GameObject scope.
     /// </summary>
     /// <remarks>
-    /// Instances are created by <see cref="ServiceLocator.ForGameObject" /> (or <see cref="Services.For(UnityEngine.GameObject)" />).
+    /// Instances are created by <see cref="ServiceLocator.ForGameObject" /> (or <see cref="Services.For(UnityEngine.GameObject, bool)" />).
     /// If a service is not registered in the GameObject scope, resolution falls back to the scene scope
     /// (and then to global, via the scene resolver).
     /// </remarks>
@@ -22,12 +22,14 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
         private readonly ServiceLocator _locator;
         private readonly Dictionary<Type, LazyProvider> _providers;
         private readonly NewScope<GameObject> _newScope;
+        private readonly bool _searchHierarchy;
 
         [CanBeNull] private Dictionary<Type, object> _services;
 
 
         internal GameObjectScopedResolver(ServiceLocator locator,
             GameObject gameObject,
+            bool searchHierarchy,
             [CanBeNull] Dictionary<Type, object> services,
             Dictionary<Type, LazyProvider> providers,
             NewScope<GameObject> newScope)
@@ -41,6 +43,7 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
             _providers = providers;
             _locator = locator;
             _newScope = newScope;
+            _searchHierarchy = searchHierarchy;
         }
 
         /// <inheritdoc />
@@ -59,22 +62,25 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
             if (_services is null || !_services.ContainsKey(requestedType))
             {
                 // gameobjects only, walk up the hierarchy
-                var grabbing = _gameObject.transform.parent;
-                while (grabbing)
+                if (_searchHierarchy)
                 {
-                    var parentServices = _locator.Grab(grabbing.gameObject);
-                    if (parentServices is not null && parentServices.TryGetValue(requestedType, out var grabbed))
+                    var grabbing = _gameObject.transform.parent;
+                    while (grabbing)
                     {
-                        if (grabbed is AliasTo a)
-                            grabbed = a.AliasTarget;
+                        var parentServices = _locator.Grab(grabbing.gameObject);
+                        if (parentServices is not null && parentServices.TryGetValue(requestedType, out var grabbed))
+                        {
+                            if (grabbed is AliasTo a)
+                                grabbed = a.AliasTarget;
 
-                        if (grabbed is IOnResolved r)
-                            r.OnResolved();
+                            if (grabbed is IOnResolved r)
+                                r.OnResolved();
 
-                        return (T)grabbed;
+                            return (T)grabbed;
+                        }
+
+                        grabbing = grabbing.parent;
                     }
-
-                    grabbing = grabbing.parent;
                 }
 
                 // check if we have the type in the providers
@@ -126,23 +132,26 @@ namespace SystemScrap.ServiceLocator.Core.ScopedResolvers
             var requestedType = typeof(T);
             if (_services is null || !_services.TryGetValue(requestedType, out var f))
             {
-                var grabbing = _gameObject.transform.parent;
-                while (grabbing)
+                if (_searchHierarchy)
                 {
-                    var parentServices = _locator.Grab(grabbing.gameObject);
-                    if (parentServices is not null && parentServices.TryGetValue(requestedType, out var grabbed))
+                    var grabbing = _gameObject.transform.parent;
+                    while (grabbing)
                     {
-                        if (grabbed is AliasTo a)
-                            grabbed = a.AliasTarget;
-                        found = grabbed as T;
+                        var parentServices = _locator.Grab(grabbing.gameObject);
+                        if (parentServices is not null && parentServices.TryGetValue(requestedType, out var grabbed))
+                        {
+                            if (grabbed is AliasTo a)
+                                grabbed = a.AliasTarget;
+                            found = grabbed as T;
 
-                        if (grabbed is IOnResolved r)
-                            r.OnResolved();
+                            if (grabbed is IOnResolved r)
+                                r.OnResolved();
 
-                        return true;
+                            return true;
+                        }
+
+                        grabbing = grabbing.parent;
                     }
-
-                    grabbing = grabbing.parent;
                 }
 
                 if (!_providers.TryGetValue(requestedType, out var provider))

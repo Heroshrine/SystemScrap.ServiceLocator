@@ -257,12 +257,14 @@ namespace SystemScrap.ServiceLocator.Core
         /// Creates a resolver for a specific GameObject scope.
         /// </summary>
         /// <param name="gameObject">The GameObject to resolve services from.</param>
+        /// <param name="searchHierarchy">If true, search the hierarchy for services.</param>
         /// <returns>A GameObject-scoped resolver.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="gameObject" /> is <c>null</c>.</exception>
-        public IScopedResolver ForGameObject(GameObject gameObject)
+        public IScopedResolver ForGameObject(GameObject gameObject, bool searchHierarchy)
         {
             _gameObjectServices.TryGetValue(gameObject, out var services);
-            return new GameObjectScopedResolver(this, gameObject, services, _lazyProviders[Scope.GameObject],
+            return new GameObjectScopedResolver(this, gameObject, searchHierarchy, services,
+                _lazyProviders[Scope.GameObject],
                 NewGameObjectScope);
         }
 

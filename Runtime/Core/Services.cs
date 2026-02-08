@@ -32,12 +32,12 @@ namespace SystemScrap.ServiceLocator.Core
         /// <summary>
         /// Gets a resolver for the provided component's <see cref="GameObject" /> scope.
         /// </summary>
-        public static IScopedResolver For(Component component) => s_locator.ForGameObject(component.gameObject);
+        public static IScopedResolver For(Component component, bool searchHierarchy = true) => s_locator.ForGameObject(component.gameObject, searchHierarchy);
 
         /// <summary>
         /// Gets a resolver for the provided <see cref="GameObject" /> scope.
         /// </summary>
-        public static IScopedResolver For(GameObject gameObject) => s_locator.ForGameObject(gameObject);
+        public static IScopedResolver For(GameObject gameObject, bool searchHierarchy = true) => s_locator.ForGameObject(gameObject, searchHierarchy);
 
         /// <summary>
         /// Gets a resolver for the provided <see cref="Scene" /> scope.
