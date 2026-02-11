@@ -3,10 +3,10 @@
   "version": "1.1.2",
   "displayName": "SystemScrap Service Locator",
   "description": "A service locator",
-  "unity": "6000.3",
+  "unity": "6000.0",
   "author": {
     "name": "SystemScrap",
-    "url": "https://www.systemscrap.com"
+    "url": "https://github.com/Heroshrine/SystemScrap.ServiceLocator"
   },
   "dependencies": {
     "com.unity.test-framework": "1.6.0",
