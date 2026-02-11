@@ -23,6 +23,10 @@ public class Foo : MonoBehaviour
   }
 }
 ```
+> [!TIP]
+> There are lifetime callbacks you can receive on registered services by implementing certain interfaces.
+> There's also support for the IDisposable interface!
+
 ## Getting and Resolving
 ```cs
 public class Foo : MonoBehaviour
